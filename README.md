@@ -1,5 +1,7 @@
 # SmartAdQuery — Web & Semantic Analytics Engine
 
+[![CI](https://github.com/shrutilekkala/Smart-Ad-Query/actions/workflows/ci.yml/badge.svg)](https://github.com/shrutilekkala/Smart-Ad-Query/actions/workflows/ci.yml)
+
 An end-to-end semantic analytics platform for ad campaign data: a React
 frontend, FastAPI microservices, a FAISS vector index for semantic search,
 and a retrieval-augmented generation (RAG) endpoint for natural-language
@@ -44,8 +46,9 @@ uvicorn app.main:app --reload --port 8000
 On first startup the app seeds a synthetic dataset of ~300 ad records
 (`app/seed_data.py`) and builds the FAISS index automatically.
 
-Optional: set `ANTHROPIC_API_KEY` to enable LLM-generated RAG answers
-instead of the extractive fallback.
+Optional: copy `backend/.env.example` to `backend/.env` and set
+`ANTHROPIC_API_KEY` to enable LLM-generated RAG answers instead of the
+extractive fallback.
 
 Run tests:
 
