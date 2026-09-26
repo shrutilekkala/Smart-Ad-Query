@@ -1,0 +1,12 @@
+campaign_id,campaign_name,channel,region,spend,impressions,clicks,conversions,revenue
+CMP-001,Spring Search Growth,Google Search,North America,42000,1200000,54000,2800,134000
+CMP-002,Finance Leaders LinkedIn,LinkedIn,North America,31000,410000,9200,720,80600
+CMP-003,EMEA Retargeting,Display,EMEA,18000,980000,14800,510,28400
+CMP-004,Product Launch Video,YouTube,North America,36000,1600000,46000,1300,75600
+CMP-005,APAC Demand Capture,Google Search,APAC,27000,720000,31000,1700,97200
+CMP-006,Enterprise ABM,LinkedIn,EMEA,44000,350000,7800,640,118800
+CMP-007,Brand Awareness Q3,Display,North America,25000,2100000,19000,260,18900
+CMP-008,Customer Stories,YouTube,EMEA,21000,870000,25000,820,48300
+CMP-009,Developer Newsletter,Email,Global,9000,280000,34000,1900,68400
+CMP-010,Trial Conversion Nurture,Email,North America,12000,190000,42000,2400,110400
+

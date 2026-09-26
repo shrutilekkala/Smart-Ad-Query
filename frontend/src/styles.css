@@ -1,0 +1,28 @@
+:root { font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #17211b; background: #f3f7f4; }
+* { box-sizing: border-box; }
+body { margin: 0; }
+main { width: min(1120px, calc(100% - 40px)); margin: 0 auto; padding: 72px 0; }
+header { max-width: 760px; margin-bottom: 44px; }
+.eyebrow { color: #34705a; font-size: 12px; font-weight: 800; letter-spacing: .14em; }
+h1 { font-family: Georgia, serif; font-size: clamp(44px, 8vw, 78px); line-height: .98; margin: 10px 0 18px; letter-spacing: -.04em; }
+.lede { color: #53645a; font-size: 19px; line-height: 1.6; }
+form, .result { background: white; border: 1px solid #dbe6de; border-radius: 20px; padding: 28px; box-shadow: 0 16px 50px rgba(37, 62, 46, .08); }
+label { display: block; font-weight: 700; margin-bottom: 10px; }
+.query-row { display: flex; gap: 12px; }
+input { flex: 1; border: 1px solid #bfcec4; border-radius: 10px; padding: 14px 16px; font: inherit; }
+button { border: 0; border-radius: 10px; background: #1f6048; color: white; padding: 14px 20px; font-weight: 750; cursor: pointer; }
+button:disabled { opacity: .6; }
+.examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.chip { background: #edf5f0; color: #315846; padding: 8px 12px; font-size: 13px; }
+.result { margin-top: 22px; }
+.result-heading { display: flex; justify-content: space-between; gap: 20px; align-items: start; }
+.result-heading h2 { margin: 4px 0 20px; font-size: 25px; }
+.result-heading span { white-space: nowrap; background: #e4f3e9; color: #256143; border-radius: 999px; padding: 7px 11px; font-size: 12px; font-weight: 700; }
+.table-wrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; }
+th, td { text-align: left; padding: 12px; border-bottom: 1px solid #e6ece8; }
+th { color: #526158; text-transform: capitalize; }
+.footnote { color: #66736b; font-size: 12px; line-height: 1.5; }
+.error { color: #a12b2b; }
+@media (max-width: 680px) { main { padding: 38px 0; } .query-row { flex-direction: column; } .result-heading { flex-direction: column; } }
+
