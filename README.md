@@ -1,41 +1,65 @@
 # SmartAdQuery
 
-SmartAdQuery is a full-stack semantic analytics application for exploring advertising performance with natural-language questions. It combines a React and TypeScript interface, a FastAPI backend, constrained SQLite analytics, and local semantic retrieval over a synthetic campaign dataset.
+Ask advertising-performance questions in plain English and get a grounded answer, the supporting rows, and an explicit confidence level.
 
-This repository is a public reconstruction built with synthetic data. It does not contain employer or customer code, data, prompts, or infrastructure.
+SmartAdQuery is a full-stack campaign analytics application for marketers and analysts who need to identify strong channels, surface underperforming campaigns, and inspect portfolio performance without writing SQL. A React interface sends each question to a FastAPI service, which routes it to reviewed SQLite query templates or deterministic campaign-metadata retrieval.
 
-## What is implemented
+> This is a public reconstruction built with synthetic campaign data. It contains no employer or customer code, data, prompts, or infrastructure.
 
-- React and TypeScript analyst interface with example questions and responsive results
-- FastAPI endpoints for campaign records, health checks, and grounded analytics queries
-- allowlisted SQL templates rather than unrestricted model-generated SQL
-- deterministic semantic retrieval over campaign names, channels, and regions
-- row-level citations and explicit confidence and limitation fields
-- synthetic data with a documented schema
-- service-level tests and local Docker Compose setup
+## What you can ask
 
-## Intended request path
+- **“Compare performance by channel”** — ranks channels by return on ad spend (ROAS).
+- **“Show the top campaigns”** — returns the five campaigns with the highest ROAS.
+- **“Show underperforming campaigns”** — finds campaigns below a defined ROAS threshold.
+- **Campaign, channel, or region questions** — retrieves matching campaign records from local metadata.
+- **Portfolio questions** — summarizes spend, revenue, impressions, clicks, conversions, and ROAS.
+
+Every response includes the detected intent, source rows, a citation to the synthetic dataset, confidence, and known limitations. The result is inspectable instead of being an unsupported generated answer.
+
+## How it works
 
 ```mermaid
 flowchart LR
-    User[Analyst question] --> UI[Web interface]
-    UI --> API[FastAPI orchestration]
-    API --> Plan[Query plan]
-    Plan --> SQL[(Allowlisted SQLite analytics)]
-    Plan --> Retrieval[(Local semantic retrieval)]
-    SQL --> Answer[Grounded response]
-    Retrieval --> Answer
+    User[Analyst question] --> UI[React + TypeScript]
+    UI --> API[FastAPI service]
+    API --> Router[Deterministic intent routing]
+    Router --> SQL[(Allowlisted SQLite queries)]
+    Router --> Search[Campaign metadata retrieval]
+    SQL --> Result[Answer + evidence + confidence]
+    Search --> Result
 ```
 
+1. The analyst submits a natural-language question.
+2. The service maps recognized analytics intents to parameterized, reviewed SQL templates.
+3. Metadata-specific questions use local token-vector similarity across campaign names, channels, and regions.
+4. The API returns a concise answer together with the records used to produce it.
+
+The application never turns prompt text into executable SQL. This keeps the analytics boundary predictable and prevents arbitrary database queries.
+
+## Engineering highlights
+
+- React and TypeScript analyst interface with reusable example questions
+- FastAPI endpoints for health checks, campaign records, and analytics queries
+- Read-only, in-memory SQLite analytics over a documented synthetic dataset
+- Allowlisted and parameterized SQL instead of unrestricted model-generated queries
+- Deterministic local retrieval with no hosted model or API key required
+- Row-level citations, confidence labels, and limitation fields
+- API and service tests for grounding, ranking, and safe-query behavior
+- Docker Compose setup for running the frontend and backend together
+
 ## Run locally
+
+### Docker
 
 ```bash
 docker compose up --build
 ```
 
-Then open `http://localhost:5173`. The API documentation is available at `http://localhost:8000/docs`.
+Open `http://localhost:5173`. FastAPI documentation is available at `http://localhost:8000/docs`.
 
-Without Docker:
+### Without Docker
+
+Start the API:
 
 ```bash
 cd backend
@@ -45,7 +69,7 @@ set PYTHONPATH=.
 .venv/Scripts/uvicorn app.main:app --reload
 ```
 
-In a second terminal:
+Start the frontend in a second terminal:
 
 ```bash
 cd frontend
@@ -61,6 +85,8 @@ curl -X POST http://localhost:8000/query \
   -d '{"question":"Compare performance by channel"}'
 ```
 
+The response contains `answer`, `intent`, `rows`, `citations`, `confidence`, and `limitations` fields.
+
 ## Test
 
 ```bash
@@ -69,14 +95,9 @@ set PYTHONPATH=.
 pytest
 ```
 
-## Safety model
-
-SmartAdQuery does not execute arbitrary SQL. The service maps supported intents to reviewed query templates and parameterized values. This prevents prompt text from becoming executable database instructions.
-
-## Limitations
+## Current scope
 
 - The dataset is synthetic and intentionally small.
-- Retrieval uses local token-vector similarity rather than a hosted embedding model.
-- The current application supports a bounded set of analytics intents.
-- Reported resume metrics from prior private work are not reproduced or claimed by this public reconstruction.
-- Production deployments would require authentication, persistent storage, request tracing, rate limiting, and a formal evaluation dataset.
+- The application supports a bounded set of analytics intents.
+- Metadata retrieval uses local token-vector similarity, not an embedding model.
+- A production version would need authentication, persistent storage, request tracing, rate limiting, and a formal evaluation dataset.
