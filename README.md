@@ -95,9 +95,9 @@ set PYTHONPATH=.
 pytest
 ```
 
-## Current scope
+## Design choices
 
-- The dataset is synthetic and intentionally small.
-- The application supports a bounded set of analytics intents.
-- Metadata retrieval uses local token-vector similarity, not an embedding model.
-- A production version would need authentication, persistent storage, request tracing, rate limiting, and a formal evaluation dataset.
+- **Safe, reproducible data:** the included synthetic dataset makes every example runnable without exposing proprietary campaign data.
+- **Predictable analytics:** bounded intent routing and reviewed SQL templates keep answers testable and prevent prompt text from becoming executable SQL.
+- **Local-first retrieval:** campaign metadata search runs without external model APIs, credentials, or usage costs.
+- **Inspectable results:** answers expose their supporting records, source citation, confidence, and limitations so analysts can verify the output.
